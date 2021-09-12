@@ -12,8 +12,8 @@ set(ALL_SRC
 add_executable(${PROJECT_NAME} ${ALL_SRC})
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCROOT})
 
-find_package(SFML COMPONENTS system window graphics REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-window sfml-graphics)
+find_package(SFML COMPONENTS system window graphics network REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-window sfml-graphics sfml-network)
 
 add_subdirectory(extlibs/Candle)
 target_link_libraries(${PROJECT_NAME} PRIVATE Candle-s)
