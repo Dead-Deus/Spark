@@ -7,10 +7,17 @@ set(SRC src)
 
 set(ALL_SRC 
     ${SRC}/Main.cpp
+
+    ${INC}/Server.hpp
+    ${SRC}/Server.cpp
+    ${INC}/Client.hpp
+    ${SRC}/Client.cpp
+    ${INC}/Game.hpp
+    ${SRC}/Game.cpp
 )
 
 add_executable(${PROJECT_NAME} ${ALL_SRC})
-target_include_directories(${PROJECT_NAME} PRIVATE ${INCROOT})
+target_include_directories(${PROJECT_NAME} PRIVATE ${INC})
 
 find_package(SFML COMPONENTS system window graphics network REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-window sfml-graphics sfml-network)
