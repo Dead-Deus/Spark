@@ -1,4 +1,4 @@
 [submodule "extlibs/Candle"]
 	path = extlibs/Candle
-	url = https://github.com/Dead-Deus/Candle.git
+	url = https://github.com/MiguelMJ/Candle
 	branch = dev
