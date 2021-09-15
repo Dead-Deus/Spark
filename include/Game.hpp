@@ -24,7 +24,7 @@ private:
     sf::Clock m_clock;
     float     m_dt;
 
-    Server               m_server;
+    std::vector<Server*> m_servers;
     std::vector<Client*> m_clients;
 
     sf::Thread m_serverThread;
