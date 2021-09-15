@@ -8,11 +8,11 @@ public:
     Client();
     ~Client();
 
-    void connect();
     void send();
 
 private:
-    sf::TcpSocket m_tcpSocket;
-    sf::UdpSocket m_udpSocket;
-    sf::Packet    m_packet;
+    sf::UdpSocket  m_udpSocket;
+    sf::Packet     m_packet;
+    sf::IpAddress  m_serverIp;
+    unsigned short m_serverPort;
 };

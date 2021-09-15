@@ -5,18 +5,14 @@
 
 Server::Server()
 {
-    m_udpSocket.bind(55002);
+    unsigned short serverPort;
+    std::cout << "Enter server port: ";
+    std::cin >> serverPort;
+    m_udpSocket.bind(serverPort);
 }
 
 Server::~Server()
 {
-}
-
-void Server::listen()
-{
-    sf::TcpListener listener;
-    listener.listen(2000);
-    listener.accept(m_tcpSocket);
 }
 
 void Server::receive()
@@ -27,7 +23,7 @@ void Server::receive()
 
     static std::string message;
     m_packet >> message;
-    std::cout << "Server:: " << message << std::endl;
+    std::cout << ":: " << message << std::endl;
 
     m_packet.clear();
     message.clear();

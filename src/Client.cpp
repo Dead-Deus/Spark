@@ -5,16 +5,22 @@
 
 Client::Client()
 {
-    m_udpSocket.bind(55001);
+    unsigned short clientPort;
+    std::cout << "Enter client port: ";
+    std::cin >> clientPort;
+    m_udpSocket.bind(clientPort);
+
+    std::cout << "Enter server port: ";
+    std::cin >> m_serverPort;
+
+    std::string serverIp;
+    std::cout << "Enter server ip: ";
+    std::cin >> serverIp;
+    m_serverIp = sf::IpAddress(serverIp);
 }
 
 Client::~Client()
 {
-}
-
-void Client::connect()
-{
-    m_tcpSocket.connect(sf::IpAddress::getLocalAddress(), 2000);
 }
 
 void Client::send()
@@ -23,7 +29,7 @@ void Client::send()
     std::cin >> message;
     m_packet << message;
 
-    m_udpSocket.send(m_packet, sf::IpAddress::getLocalAddress(), 55002);
+    m_udpSocket.send(m_packet, m_serverIp, m_serverPort);
 
     m_packet.clear();
     message.clear();
