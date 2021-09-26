@@ -5,7 +5,7 @@
 class Client
 {
 public:
-    Client(sf::IpAddress& serverIp, sf::IpAddress& ip, unsigned short port);
+    Client(const sf::IpAddress& serverIp, const sf::IpAddress& ip, unsigned short port);
     ~Client();
 
     void receive();
