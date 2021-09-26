@@ -1,7 +1,7 @@
 [submodule "extlibs/Candle"]
 	path = extlibs/Candle
 	url = https://github.com/MiguelMJ/Candle
-	branch = dev
+	branch = master
 [submodule "extlibs/SFML"]
 	path = extlibs/SFML
 	url = https://github.com/SFML/SFML
