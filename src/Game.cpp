@@ -1,9 +1,6 @@
 #include "Game.hpp"
 
-#define SERVER
-//#define CLIENT 
-
-Game::Game() : m_serverThread([&] { while(m_window.isOpen()){m_servers[0]->receive();} }), m_clientThread([&] { while(m_window.isOpen()){m_clients[0]->send();} })
+Game::Game() : m_serverThread([&] { while(m_window.isOpen()){m_server.receive();} })
 {
     m_window.create(sf::VideoMode(720, 480), "Spark");
     m_window.setVerticalSyncEnabled(true);
@@ -13,26 +10,11 @@ Game::Game() : m_serverThread([&] { while(m_window.isOpen()){m_servers[0]->recei
 
 Game::~Game()
 {
-#if defined SERVER
-    delete m_servers[0];
-#elif defined CLIENT
-    delete m_clients[0];
-#endif
 }
 
 void Game::run()
 {
-#if defined SERVER
-    m_servers.push_back(new Server());
-#elif defined CLIENT
-    m_clients.push_back(new Client());
-#endif
-    
-#if defined SERVER
     m_serverThread.launch();
-#elif defined CLIENT
-    m_clientThread.launch();
-#endif
 
     while (m_window.isOpen())
     {

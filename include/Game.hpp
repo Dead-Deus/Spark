@@ -1,11 +1,8 @@
 #pragma once
 
-#include <vector>
-
 #include <SFML/Graphics.hpp>
 
 #include "Server.hpp"
-#include "Client.hpp"
 
 class Game
 {
@@ -24,11 +21,8 @@ private:
     sf::Clock m_clock;
     float     m_dt;
 
-    std::vector<Server*> m_servers;
-    std::vector<Client*> m_clients;
-
+    Server m_server;
     sf::Thread m_serverThread;
-    sf::Thread m_clientThread;
 
     void handleEvent();
     void update();

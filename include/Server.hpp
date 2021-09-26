@@ -1,6 +1,8 @@
 #pragma once
 
-#include <SFML/Network.hpp>
+#include <vector>
+
+#include "Client.hpp"
 
 class Server
 {
@@ -13,4 +15,9 @@ public:
 private:
     sf::UdpSocket m_udpSocket;
     sf::Packet    m_packet;
+
+    sf::Thread m_clientThread;
+    std::vector<Client*> m_clients;
+
+    bool m_isRunning;
 };

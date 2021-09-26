@@ -2,3 +2,6 @@
 	path = extlibs/Candle
 	url = https://github.com/MiguelMJ/Candle
 	branch = dev
+[submodule "extlibs/SFML"]
+	path = extlibs/SFML
+	url = https://github.com/SFML/SFML
