@@ -8,7 +8,7 @@
 Client::Client(const sf::IpAddress& serverIp, const sf::IpAddress& ip, unsigned short port) : m_serverIp(serverIp), m_ip(ip), m_port(port)
 {
     m_udpSocket.bind(m_port);
-
+     
     std::string connectMessage("1");
     send(connectMessage);
 }
