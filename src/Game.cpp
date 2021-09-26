@@ -1,6 +1,8 @@
 #include "Game.hpp"
 
-Game::Game() : m_serverThread([&] { while(m_window.isOpen()){m_server.receive();} })
+#include <iostream>
+
+Game::Game() 
 {
     m_window.create(sf::VideoMode(720, 480), "Spark");
     m_window.setVerticalSyncEnabled(true);
@@ -10,11 +12,12 @@ Game::Game() : m_serverThread([&] { while(m_window.isOpen()){m_server.receive();
 
 Game::~Game()
 {
+    
 }
 
 void Game::run()
 {
-    m_serverThread.launch();
+    m_network.run();
 
     while (m_window.isOpen())
     {

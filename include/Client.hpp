@@ -5,14 +5,21 @@
 class Client
 {
 public:
-    Client();
+    Client(sf::IpAddress& serverIp, sf::IpAddress& ip, unsigned short port);
     ~Client();
 
-    void send();
+    void receive();
+    void send(const std::string& message);
+
+    const sf::IpAddress& getIp() const;
+    unsigned int         getPort() const;
 
 private:
     sf::UdpSocket  m_udpSocket;
-    sf::Packet     m_packet;
+    sf::Packet     m_receivePacket;
+    sf::Packet     m_sendPacket;
+    sf::IpAddress  m_ip;
     sf::IpAddress  m_serverIp;
-    unsigned short m_serverPort;
+    
+    unsigned short m_port;
 };

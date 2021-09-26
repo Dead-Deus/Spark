@@ -2,10 +2,19 @@
 
 #include <vector>
 
+#include <SFML/Network.hpp>
+
 #include "Client.hpp"
 
 class Server
 {
+public:
+    enum Action
+    {
+        Connect = 1,
+        Disconnect,
+    };
+
 public:
     Server();
     ~Server();
@@ -13,11 +22,21 @@ public:
     void receive();
 
 private:
+    struct ClientData
+    {
+        ClientData(sf::IpAddress& ip, unsigned short port) : ip(ip), port(port)
+        {
+
+        }
+
+        sf::IpAddress ip;
+        unsigned short port;
+    };
+
     sf::UdpSocket m_udpSocket;
     sf::Packet    m_packet;
 
-    sf::Thread m_clientThread;
-    std::vector<Client*> m_clients;
+    std::vector<ClientData*> m_clients;
 
-    bool m_isRunning;
+    void applyAction(Action action, sf::IpAddress ip, unsigned short port); 
 };

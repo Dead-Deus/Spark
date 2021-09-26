@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Server.hpp"
+#include "Network.hpp"
 
 class Game
 {
@@ -21,8 +21,7 @@ private:
     sf::Clock m_clock;
     float     m_dt;
 
-    Server m_server;
-    sf::Thread m_serverThread;
+    Network m_network;
 
     void handleEvent();
     void update();

@@ -2,35 +2,53 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
-Server::Server() : m_clientThread([&] { while(m_isRunning){ m_clients[0]->send();} })
+Server::Server() 
 {
-    unsigned short serverPort;
-    std::cout << "Enter server port: ";
-    std::cin >> serverPort;
-    m_udpSocket.bind(serverPort);
-    m_isRunning = true;
-
-    m_clients.push_back(new Client());
-    m_clientThread.launch();
+    m_udpSocket.bind(12000);
 }
 
 Server::~Server()
 {
-    m_isRunning = false;
-    delete m_clients[0];
+    for (auto client : m_clients)
+    {
+        delete client;
+    }
 }
 
 void Server::receive()
 {
-    sf::IpAddress  sender;
-    unsigned short port;
-    m_udpSocket.receive(m_packet, sender, port);
+    sf::IpAddress  senderIp;
+    unsigned short senderPort;
+    m_udpSocket.receive(m_packet, senderIp, senderPort);
 
-    static std::string message;
+    std::string message;
     m_packet >> message;
-    std::cout << ":: " << message << std::endl;
+    std::stringstream ssAction;
+    ssAction << message;
+    unsigned int action;
+    ssAction >> action;
+    applyAction(Action(action), senderIp, senderPort);
+
+    for (auto client : m_clients)
+    {
+       if (senderPort != client->port) m_udpSocket.send(m_packet, client->ip, client->port);
+    }
 
     m_packet.clear();
-    message.clear();
+}
+
+
+void Server::applyAction(Action action, sf::IpAddress ip, unsigned short port)
+{
+    switch (action)
+    {
+        case Connect:
+        {
+            std::cout << ip.toString() << " " << port;
+            m_clients.push_back(new ClientData(ip, port));
+            break;
+        }
+    }
 }

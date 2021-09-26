@@ -3,34 +3,49 @@
 #include <iostream>
 #include <string>
 
-Client::Client()
+#include "Server.hpp"
+
+Client::Client(sf::IpAddress& serverIp, sf::IpAddress& ip, unsigned short port) : m_serverIp(serverIp), m_ip(ip), m_port(port)
 {
-    unsigned short clientPort;
-    std::cout << "Enter client port: ";
-    std::cin >> clientPort;
-    m_udpSocket.bind(clientPort);
+    m_udpSocket.bind(m_port);
 
-    std::cout << "Enter server port: ";
-    std::cin >> m_serverPort;
-
-    std::string serverIp;
-    std::cout << "Enter server ip: ";
-    std::cin >> serverIp;
-    m_serverIp = sf::IpAddress(serverIp);
+    std::string connectMessage("1");
+    send(connectMessage);
 }
 
 Client::~Client()
 {
 }
 
-void Client::send()
+void Client::receive()
 {
-    static std::string message;
-    std::cin >> message;
-    m_packet << message;
+    sf::IpAddress  senderIp;
+    unsigned short senderPort;
+    m_udpSocket.receive(m_receivePacket, senderIp, senderPort);
+    
+    std::string message;
+    m_receivePacket >> message;
+    
+    std::cout << "Server: " << message << std::endl;
 
-    m_udpSocket.send(m_packet, m_serverIp, m_serverPort);
+    m_receivePacket.clear();
+}
 
-    m_packet.clear();
-    message.clear();
+void Client::send(const std::string& message)
+{
+    m_sendPacket << message;
+
+    m_udpSocket.send(m_sendPacket, m_serverIp, 12000);
+
+    m_sendPacket.clear();
+}
+
+const sf::IpAddress& Client::getIp() const
+{
+    return m_ip;
+}
+
+unsigned int Client::getPort() const
+{
+    return m_port;
 }

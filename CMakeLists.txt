@@ -12,6 +12,8 @@ set(ALL_SRC
     ${SRCROOT}/Server.cpp
     ${INCROOT}/Client.hpp
     ${SRCROOT}/Client.cpp
+    ${INCROOT}/Network.hpp
+    ${SRCROOT}/Network.cpp
     ${INCROOT}/Game.hpp
     ${SRCROOT}/Game.cpp
 )
