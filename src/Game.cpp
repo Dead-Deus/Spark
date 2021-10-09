@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-Game::Game() 
+#include <SFML/System/Thread.hpp>
+
+Game::Game()
 {
     m_window.create(sf::VideoMode(720, 480), "Spark");
     m_window.setVerticalSyncEnabled(true);
@@ -12,12 +14,22 @@ Game::Game()
 
 Game::~Game()
 {
-    
 }
 
 void Game::run()
 {
-    m_network.run();
+    sf::Thread t(
+        [&]()
+        {
+            while (m_window.isOpen())
+            {
+                std::string message;
+                std::cin >> message;
+                m_network << message;
+            }
+        });
+
+    t.launch();
 
     while (m_window.isOpen())
     {
@@ -38,10 +50,15 @@ void Game::handleEvent()
         {
             m_window.close();
         }
-        if (event.type == sf::Event::Resized)
+        else if (event.type == sf::Event::Resized)
         {
             float aspectRation = float(m_window.getSize().x) / float(m_window.getSize().y);
             m_view.setSize(m_viewResolution.x * aspectRation, m_viewResolution.y);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        {
+            m_network();
         }
     }
 }
